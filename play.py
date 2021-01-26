@@ -7,4 +7,8 @@ class player:
                 self.equipment = equipment
     def print_player(self):
         print("Potion: ", self.potion)
+        print("Skill: ", self.skill)
+        print("Stamina: ", self.stamina)
+        print("Luck: ", self.luck)
+        print("Equipment: ", self.equipment)
 

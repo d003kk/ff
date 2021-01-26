@@ -25,9 +25,12 @@ class TestStringMethods(unittest.TestCase):
         initialStamina = 10
         initialLuck = 10
         initialEquipment = ["fire ring", "shield"]
-        myplayer = play.player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment)
-        myplayer.print_player();
-        assert mocked_print.mock_calls == [call('Potion: ', 'blah')]
+        myplayer = play.player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
+        myplayer.print_player()
+        assert mocked_print.mock_calls == [call("Potion: ", initialPotion) ,
+                call("Skill: ", initialSkill) ,
+                call("Stamina: ", initialStamina) ,
+                call("Luck: ", initialLuck) ,call("Equipment: ", initialEquipment) ]
 
 if __name__ == '__main__':
     unittest.main()
