@@ -32,5 +32,17 @@ class TestStringMethods(unittest.TestCase):
                 call("Stamina: ", initialStamina) ,
                 call("Luck: ", initialLuck) ,call("Equipment: ", initialEquipment) ]
 
+    @patch('play.onedie')
+    def test_gen_stat(self, mocked_ondie):
+        mocked_luck = 1
+        mocked_stamina = 1
+        mocked_skill = 1
+        mocked_ondie.side_effect = [mocked_luck, mocked_stamina, mocked_skill]
+        myplayer = play.player()
+        myplayer.gen_stat()
+        self.assertEqual(myplayer.skill, play.player.BASE_SKILL + mocked_skill)
+        self.assertEqual(myplayer.stamina, play.player.BASE_STAMINA + mocked_stamina)
+        self.assertEqual(myplayer.luck, play.player.BASE_LUCK + mocked_luck)
+
 if __name__ == '__main__':
     unittest.main()
