@@ -44,5 +44,8 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(myplayer.stamina, play.player.BASE_STAMINA + mocked_stamina)
         self.assertEqual(myplayer.luck, play.player.BASE_LUCK + mocked_luck)
 
+    @patch('play.onedie')
+    def test_gen_stat(self, mocked_ondie):
+
 if __name__ == '__main__':
     unittest.main()
