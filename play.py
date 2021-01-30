@@ -22,13 +22,14 @@ class player:
                 self.skill = player.BASE_SKILL + onedie()
                 self.stamina =  player.BASE_STAMINA + onedie()
                 self.luck = player.BASE_LUCK + onedie()
-    def test_luck()
-        passed =  towdie() <= self.luck
+    def test_luck(self):
+        passed =  twodie() <= self.luck
         self.luck = self.luck -1
         return passed
-    def flee(tryLuck = False)
+
+    def flee(self, tryLuck = False):
         decrement = 2
-        if tryLuck and test_luck()
+        if tryLuck and self.test_luck():
             decrement = 1
         self.stamina = self.stamina - decrement
         

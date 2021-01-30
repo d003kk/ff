@@ -22,12 +22,14 @@ class TestStringMethods(unittest.TestCase):
     def test_player_print(self, mocked_print):
         initialPotion = "blah"
         initialSkill = 10
+        initialGold = 100
         initialStamina = 10
         initialLuck = 10
         initialEquipment = ["fire ring", "shield"]
-        myplayer = play.player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
+        myplayer = play.player(gold=initialGold, potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
         myplayer.print_player()
-        assert mocked_print.mock_calls == [call("Potion: ", initialPotion) ,
+        assert mocked_print.mock_calls == [call("Gold: ", initialGold) ,
+                call("Potion: ", initialPotion) ,
                 call("Skill: ", initialSkill) ,
                 call("Stamina: ", initialStamina) ,
                 call("Luck: ", initialLuck) ,call("Equipment: ", initialEquipment) ]
@@ -44,8 +46,41 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(myplayer.stamina, play.player.BASE_STAMINA + mocked_stamina)
         self.assertEqual(myplayer.luck, play.player.BASE_LUCK + mocked_luck)
 
-    @patch('play.onedie')
-    def test_gen_stat(self, mocked_ondie):
+    @patch('play.twodie')
+    def test_luck(self, mocked_twodie):
+        initialPotion = "blah"
+        initialSkill = 10
+        initialStamina = 10
+        initialLuck = 10
+        initialEquipment = ["fire ring", "shield"]
+        myplayer = play.player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
+        mocked_twodie.side_effect = [6, 12]
+        lucky = myplayer.test_luck()
+        self.assertTrue(lucky)
+        self.assertEqual(myplayer.luck, initialLuck -1)
+        lucky = myplayer.test_luck()
+        self.assertFalse(lucky)
+        self.assertEqual(myplayer.luck, initialLuck -2)
+
+    @patch('play.twodie')
+    def test_luck(self, mocked_twodie):
+        initialPotion = "blah"
+        initialSkill = 10
+        initialStamina = 10
+        initialLuck = 10
+        initialEquipment = ["fire ring", "shield"]
+        myplayer = play.player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
+        mocked_twodie.side_effect = [6, 12]
+        # Passes luck test
+        myplayer.flee(tryLuck=True)
+        self.assertEqual(myplayer.stamina, initialStamina -1)
+        # Fails luck test
+        myplayer.flee(tryLuck=True)
+        self.assertEqual(myplayer.stamina, initialStamina -3 )
+        # Dont use luck
+        myplayer.flee()
+        self.assertEqual(myplayer.stamina, initialStamina -5 )
+
 
 if __name__ == '__main__':
     unittest.main()
