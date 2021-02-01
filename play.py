@@ -1,39 +1,42 @@
-import random
+"""Container play class """
+import dice
+import combatant
 
-def onedie():
-    return random.randrange(1, 6, 1)
-def twodie():
-    return ondie() + ondie()
+class player(combatant):
+    """ The actual player of the game"""
 
-
-
-class player:
     BASE_STAMINA = 6
     BASE_SKILL = 12
     BASE_LUCK = 6
     def __init__(self, potion=None, skill=0, stamina=0, luck=0, equipment=[], gold=0):
-                self.gold = gold
-                self.potion = potion
-                self.skill = skill
-                self.stamina = stamina
-                self.luck = luck
-                self.equipment = equipment
+        """initialize player instance"""
+        self.gold = gold
+        self.potion = potion
+        self.skill = skill
+        self.stamina = stamina
+        self.luck = luck
+        self.equipment = equipment
+
     def gen_stat(self):
-                self.skill = player.BASE_SKILL + onedie()
-                self.stamina =  player.BASE_STAMINA + onedie()
-                self.luck = player.BASE_LUCK + onedie()
+        """Randomly generate stats"""
+        self.skill = player.BASE_SKILL + dice.onedie()
+        self.stamina =  player.BASE_STAMINA + dice.onedie()
+        self.luck = player.BASE_LUCK + dice.onedie()
     def test_luck(self):
-        passed =  twodie() <= self.luck
+        """Test luck against two dice"""
+        passed =  dice.twodie() <= self.luck
         self.luck = self.luck -1
         return passed
 
     def flee(self, tryLuck = False):
+        """Flee with optional luck test"""
         decrement = 2
         if tryLuck and self.test_luck():
             decrement = 1
         self.stamina = self.stamina - decrement
-        
+
     def print_player(self):
+        """Print all stats and loot"""
         print("Gold: ", self.gold)
         print("Potion: ", self.potion)
         print("Skill: ", self.skill)

@@ -3,7 +3,7 @@ import play
 from unittest.mock import patch, call
 
 
-class TestStringMethods(unittest.TestCase):
+class TestPlayer(unittest.TestCase):
 
     def test_init(self):
         initialPotion = "blah"
@@ -34,7 +34,7 @@ class TestStringMethods(unittest.TestCase):
                 call("Stamina: ", initialStamina) ,
                 call("Luck: ", initialLuck) ,call("Equipment: ", initialEquipment) ]
 
-    @patch('play.onedie')
+    @patch('play.dice.onedie')
     def test_gen_stat(self, mocked_ondie):
         mocked_luck = 1
         mocked_stamina = 1
@@ -46,7 +46,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(myplayer.stamina, play.player.BASE_STAMINA + mocked_stamina)
         self.assertEqual(myplayer.luck, play.player.BASE_LUCK + mocked_luck)
 
-    @patch('play.twodie')
+    @patch('play.dice.twodie')
     def test_luck(self, mocked_twodie):
         initialPotion = "blah"
         initialSkill = 10
@@ -62,7 +62,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertFalse(lucky)
         self.assertEqual(myplayer.luck, initialLuck -2)
 
-    @patch('play.twodie')
+    @patch('play.dice.twodie')
     def test_luck(self, mocked_twodie):
         initialPotion = "blah"
         initialSkill = 10
