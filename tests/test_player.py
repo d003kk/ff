@@ -11,7 +11,7 @@ class TestPlayer(unittest.TestCase):
         initialStamina = 10
         initialLuck = 10
         initialEquipment = ["fire ring", "shield"]
-        myplayer = play.player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
+        myplayer = play.Player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
         self.assertEqual(myplayer.potion, initialPotion)
         self.assertEqual(myplayer.skill, initialSkill)
         self.assertEqual(myplayer.stamina, initialStamina)
@@ -26,7 +26,7 @@ class TestPlayer(unittest.TestCase):
         initialStamina = 10
         initialLuck = 10
         initialEquipment = ["fire ring", "shield"]
-        myplayer = play.player(gold=initialGold, potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
+        myplayer = play.Player(gold=initialGold, potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
         myplayer.print_player()
         assert mocked_print.mock_calls == [call("Gold: ", initialGold) ,
                 call("Potion: ", initialPotion) ,
@@ -40,11 +40,11 @@ class TestPlayer(unittest.TestCase):
         mocked_stamina = 1
         mocked_skill = 1
         mocked_ondie.side_effect = [mocked_luck, mocked_stamina, mocked_skill]
-        myplayer = play.player()
+        myplayer = play.Player()
         myplayer.gen_stat()
-        self.assertEqual(myplayer.skill, play.player.BASE_SKILL + mocked_skill)
-        self.assertEqual(myplayer.stamina, play.player.BASE_STAMINA + mocked_stamina)
-        self.assertEqual(myplayer.luck, play.player.BASE_LUCK + mocked_luck)
+        self.assertEqual(myplayer.skill, play.Player.BASE_SKILL + mocked_skill)
+        self.assertEqual(myplayer.stamina, play.Player.BASE_STAMINA + mocked_stamina)
+        self.assertEqual(myplayer.luck, play.Player.BASE_LUCK + mocked_luck)
 
     @patch('play.dice.twodie')
     def test_luck(self, mocked_twodie):
@@ -53,7 +53,7 @@ class TestPlayer(unittest.TestCase):
         initialStamina = 10
         initialLuck = 10
         initialEquipment = ["fire ring", "shield"]
-        myplayer = play.player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
+        myplayer = play.Player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
         mocked_twodie.side_effect = [6, 12]
         lucky = myplayer.test_luck()
         self.assertTrue(lucky)
@@ -69,13 +69,13 @@ class TestPlayer(unittest.TestCase):
         initialStamina = 10
         initialLuck = 10
         initialEquipment = ["fire ring", "shield"]
-        myplayer = play.player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
+        myplayer = play.Player(potion=initialPotion, skill=initialSkill, stamina=initialStamina, equipment=initialEquipment, luck=initialLuck)
         mocked_twodie.side_effect = [6, 12]
         # Passes luck test
-        myplayer.flee(tryLuck=True)
+        myplayer.flee(try_luck=True)
         self.assertEqual(myplayer.stamina, initialStamina -1)
         # Fails luck test
-        myplayer.flee(tryLuck=True)
+        myplayer.flee(try_luck=True)
         self.assertEqual(myplayer.stamina, initialStamina -3 )
         # Dont use luck
         myplayer.flee()

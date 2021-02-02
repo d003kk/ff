@@ -5,8 +5,9 @@ class Combatant(object):
 
     """Combatants are capable of combat."""
 
-    def __init__(self, stamina=0, skill=0):
+    def __init__(self, stamina=0, skill=0, name=None):
         """ Initialize Combatant."""
+        self.name = name
         self.stamina = stamina
         self.skill = skill
 
