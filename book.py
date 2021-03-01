@@ -1,5 +1,5 @@
 """This module contains the Book class."""
-import player
+import play
 
 class Page(object):
 
@@ -16,7 +16,7 @@ class PageNexus(Page):
     """Books contain pages."""
     def __init__(self):
         """ Initialize Book."""
-        self.options= {:, :, :}
+        self.options= {"blah":232, "blahblah":3223, "baskl":323}
         self.text = "Blahblah"
     def play(self, player):
         print(self.text)
@@ -29,8 +29,8 @@ class Book(object):
         """ Initialize Book."""
         self.pages = []
 
-    def play_book(self, damage, pageNo=0):
+    def play_book(self, player, pageNo=0):
         """Combatant subtracts damage from stamina."""
-        page = self.page[pageNo]
-        while(!player.isDead())
+        page = self.pages[pageNo]
+        while not player.dead():
             page = self.pages[page.play(player)]
