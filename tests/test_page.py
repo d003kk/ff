@@ -8,10 +8,10 @@ class TestPage(unittest.TestCase):
 
     def test_init(self):
         page = book.Page()
-        self.assertEqual(page.nextPage, [])
+        self.assertEqual(page.nextpage, [])
         self.assertEqual(page.text, "")
 
-    @patch('book.play.Player', autospec=True)
+    @patch('play.Player', autospec=True)
     @patch('builtins.print')
     def test_page_play_prints_txt(self, mock_print, mock_player):
         page = book.Page()
@@ -26,7 +26,7 @@ class TestPageNexus(unittest.TestCase):
         self.assertEqual(page.options, {"blah":232, "blahblah":3223, "baskl":323})
         self.assertEqual(page.text, "")
 
-    @patch('book.play.Player', autospec=True)
+    @patch('play.Player', autospec=True)
     @patch('builtins.print')
     def test_page_play_prints_txt(self, mock_print, mock_player):
         page = book.PageNexus()
