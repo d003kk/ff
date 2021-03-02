@@ -12,7 +12,7 @@ class TestBook(unittest.TestCase):
 
     @patch('book.Page', autospec=True)
     @patch('book.play.Player', autospec=True)
-    def test_combat(self, mock_player, mock_page):
+    def test_book_player_dead(self, mock_player, mock_page):
         b = book.Book()
         b.pages.append(mock_page)
         b.pages.append(mock_page)
@@ -20,3 +20,13 @@ class TestBook(unittest.TestCase):
         b.play_book(mock_player, 0)
         mock_page.play.assert_not_called()
 
+    @patch('book.Page', autospec=True)
+    @patch('book.play.Player', autospec=True)
+    def test_book_player_dies_2nd_page(self, mock_player, mock_page):
+        b = book.Book()
+        b.pages.append(mock_page)
+        b.pages.append(mock_page)
+        mock_player.dead.side_effect = [False, True]
+        b.play_book(mock_player, 0)
+        mock_page.play.assert_called_with(mock_player)
+        self.assertEqual(mock_page.play.call_count, 1)
